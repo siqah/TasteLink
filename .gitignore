@@ -10,7 +10,7 @@ build/
 
 # Ignore environment variable files
 .env
-
+serverAccountKey.json
 # Ignore temporary files
 *.tmp
 *.swp

@@ -1,75 +1,41 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
-const SignupForm = () => {
-  const { signup } = useContext(AuthContext);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+const SignUp = () => {
+  const { signInWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
+  const handleSignIn = async () => {
     try {
-      await signup(name, email, password);
-      console.log("Signup successful!");
-      navigate("/"); // Navigate to Home page
-    } catch (err) {
-      setError(err.message);
+      await signInWithGoogle();
+      navigate("/home");
+      console.log("Signed in successfully");
+    } catch (error) {
+      console.error("Sign in failed:", error.message);
     }
-    setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSignup} className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-      <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+        <button
+          onClick={handleSignIn}
+          className="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-300"
+        >
+          Sign in with Google
+        </button>
+        <p className="mt-4 text-center">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500 hover:underline">
+            Log in
+          </Link>
+        </p>
       </div>
-      <div className="mb-4">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <div className="mb-6">
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
-      >
-        {loading ? "Signing up..." : "Sign Up"}
-      </button>
-      {error && <p className="mt-4 text-red-500 text-center">{error}</p>}
-      <Link to="/login" className="text-blue-500 justify-center items-center">Already have an account?login</Link>
-    </form>
+    </div>
   );
 };
 
-export default SignupForm;
+export default SignUp;

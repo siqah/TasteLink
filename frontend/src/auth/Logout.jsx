@@ -8,7 +8,7 @@ const Logout = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/signup');
+    navigate('/');
   };
 
   return <button onClick={handleLogout} 

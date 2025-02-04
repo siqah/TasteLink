@@ -1,12 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
-  updateProfile
+  GoogleAuthProvider
 } from "firebase/auth";
 
 import { auth } from "../firebase";
@@ -14,7 +12,7 @@ import { auth } from "../firebase";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({ user:null, loading: true });
+  const [authState, setAuthState] = useState({ user: null, loading: true });
 
   // Persist authentication state (auto login when app reloads)
   useEffect(() => {
@@ -24,45 +22,17 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe(); // Clean up listener
   }, []);
 
-  // Signup Function
-  const signup = async (name, email, password) => {
+  // Google Sign-In Function
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
-      // Optional: Update user's display name
-      await updateProfile(user, { displayName: name });
-
-      setAuthState({ user });
+      const result = await signInWithPopup(auth, provider);
+      setAuthState({ user: result.user });
     } catch (error) {
-      console.error("Signup error:", error.message);
+      console.error("Google sign-in error:", error.message);
       throw error;
     }
   };
-
-
-  // Login Function
-  const login = async (email, password) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      setAuthState({ user: userCredential.user });
-    } catch (error) {
-      console.error("Login error:", error.message);
-      throw error;
-    }
-  };
-
-  // Password Reset Function
-  const resetPassword = async (email) => {
-    try {
-      await sendPasswordResetEmail(auth, email);
-      console.log("Password reset email sent");
-    } catch (error) {
-      console.error("Password reset error:", error.message);
-      throw error;
-    }
-  };
-
   // Logout Function
   const logout = async () => {
     try {
@@ -77,9 +47,8 @@ const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{ 
       authState, 
-      signup, 
-      login, 
-      resetPassword, 
+      signInWithGoogle, 
+
       logout 
     }}>
       {!authState.loading && children} {/* Prevent app render before auth state is known */}

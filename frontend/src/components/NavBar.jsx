@@ -16,25 +16,8 @@ const NavBar = () => {
         >
           TasteLink
         </Link>
-        <div className="flex items-center space-x-4 sm:space-x-2 md:space-x-4">
-        <Link
-            to="/upload"
-            className="hidden md:flex text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
-          >
-            upload
-          </Link>
-          <Link
-            to="/order"
-            className="hidden md:flex text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
-          >
-            ORDER
-          </Link>
-          <Link
-            to="/dishes"
-            className="hidden md:flex text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
-          >
-            DISHES
-          </Link>
+        <div className="flex items-center space-x-4 sm:space-x-2 md:space-x-4"> 
+         
           {!user && (
             <>
               <Link
@@ -43,12 +26,7 @@ const NavBar = () => {
               >
                 SignUp
               </Link>
-              <Link
-                to="/login"
-                className="text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
-              >
-                Login
-              </Link>
+            
             </>
           )}
           {user && (
