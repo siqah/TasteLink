@@ -27,12 +27,9 @@ const SignUp = () => {
         >
           Sign in with Google
         </button>
-        <p className="mt-4 text-center">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Log in
-          </Link>
-        </p>
+        <button className="w-full bg-gray-200 text-gray-700 py-2 px-4 rounded mt-4 hover:bg-gray-300 transition duration-300">
+          <Link to="/home">Cancel</Link>
+        </button>
       </div>
     </div>
   );

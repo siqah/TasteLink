@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import Logout from "../auth/Logout";
 import { AuthContext } from "../context/AuthContext";
 
-
 const NavBar = () => {
   const { authState } = useContext(AuthContext);
-  const {user} =authState;
+  const { user } = authState;
+
   return (
     <nav className="z-0 p-4 flex mx-auto h-min bg-white shadow-md sm:px-6 lg:px-8">
       <div className="container mx-auto flex justify-between items-center h-16">
@@ -16,27 +16,23 @@ const NavBar = () => {
         >
           TasteLink
         </Link>
-        <div className="flex items-center space-x-4 sm:space-x-2 md:space-x-4"> 
-         
-          {!user && (
-            <>
-              <Link
-                to="/signup"
-                className="text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
-              >
-                SignUp
-              </Link>
-            
-            </>
-          )}
-          {user && (
+        <div className="flex items-center space-x-4 sm:space-x-2 md:space-x-4">
+          {!user ? (
+            <Link
+              to="/signup"
+              className="text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
+            >
+              SignUp
+            </Link>
+          ) : (
             <>
               <Logout />
-              <Link
-                to="/profile"
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 hover:bg-orange-900 transition-colors shadow-xl p-2 sm:w-8 sm:h-8 md:w-10 md:h-10"
-              >
-                👤
+              <Link to="/profile">
+                <img
+                  src={user.photoURL || "/default-profile.png"}
+                  alt="Profile"
+                  className="rounded-full w-10 h-10 object-cover border border-gray-300"
+                />
               </Link>
             </>
           )}
