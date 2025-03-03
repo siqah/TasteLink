@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useState,  } from "react";
+import { useAuth } from "../context/AuthContext";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { app } from "../firebase";
 
 const db = getFirestore(app);
 
 const CreatePost = () => {
-  const { authState } = useContext(AuthContext);
+  const { authState } = useAuth();
   const { user } = authState;
 
   const [caption, setCaption] = useState("");
@@ -58,20 +58,24 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-2">Create a Post</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
+    <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Create a Post</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
         <input
           type="text"
           placeholder="Write a caption..."
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          className="border p-2 rounded-md"
+          className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-        <input type="file" onChange={handleImageChange} className="border p-2 rounded-md" />
+        <input 
+          type="file" 
+          onChange={handleImageChange} 
+          className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" 
+        />
         <button
           type="submit"
-          className="bg-orange-500 text-white p-2 rounded-md hover:bg-orange-700"
+          className="bg-orange-500 text-white p-3 rounded-md hover:bg-orange-600 transition duration-300 ease-in-out"
           disabled={loading}
         >
           {loading ? "Posting..." : "Post"}

@@ -1,16 +1,10 @@
-import { Link, Navigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const Beforelogin = ({ children }) => {
-  const { user } = useContext(AuthContext);
+const Beforelogin = () => {
 
   // If the user is authenticated, redirect to the home page
-  if (user) {
-    return <Navigate to="/" />;
-  }
-
+  
   // Render the landing page with the 'Get Started' button
   return (
     <section className="flex bg-cover bg-center h-screen w-full bg-orange-900">
@@ -30,8 +24,6 @@ const Beforelogin = ({ children }) => {
           </Link>
         </div>
       </div>
-      {/* Render children if there are additional components to display */}
-      {children && <div>{children}</div>}
     </section>
   );
 };

@@ -1,10 +1,9 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { Link } from "react-router-dom";
-import Logout from "../auth/Logout";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const NavBar = () => {
-  const { authState } = useContext(AuthContext);
+  const { authState } = useAuth();
   const { user } = authState;
 
   return (
@@ -22,11 +21,10 @@ const NavBar = () => {
               to="/signup"
               className="text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
             >
-              SignUp
+              SignIn
             </Link>
           ) : (
             <>
-              <Logout />
               <Link to="/profile">
                 <img
                   src={user.photoURL || "/default-profile.png"}

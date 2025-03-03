@@ -1,13 +1,13 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect,} from "react";
 import { Link } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { app } from "../firebase";
 import { addExtraInfo, getExtraInfo } from "../api/extraInfo";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth} from "../context/AuthContext";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
-  const { authState } = useContext(AuthContext);
+  const { authState } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [extraInfo, setExtraInfo] = useState({
     bio: "",

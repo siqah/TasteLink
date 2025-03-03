@@ -2,6 +2,7 @@
 import{useEffect, useState} from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { app } from "../firebase";
+import PostCard from "./PostCard";
 
 const db = getFirestore(app);
 
@@ -24,16 +25,7 @@ const DisplayPosts = () => {
 
   return (
     <div>
-      {posts.map((post) => (
-        <div key={post.id} className="bg-white p-4 rounded-lg shadow-md mb-4">
-          <div className="flex items-center mb-2">
-            <img src={post.userPhotoURL} alt="User" className="w-10 h-10 rounded-full mr-2" />
-            <p className="font-semibold">{post.username}</p>
-          </div>
-          <p className="mb-2">{post.caption}</p>
-          {post.imageBase64 && <img src={post.imageBase64} alt="Post" className="w-full rounded-lg" />}
-        </div>
-      ))}
+      <PostCard posts={posts}/>
     </div>
   );
 };

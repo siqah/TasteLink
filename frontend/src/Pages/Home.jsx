@@ -1,13 +1,11 @@
 import NavBar from "../components/NavBar";
 import Sidebar from "../components/Sidebar";
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 // import { Link } from "react-router-dom";
 import PostList from "../components/PostList";
-import CreatePost from "../components/CreatePost";
 
 const Home = () => {
-  const {authState} = useContext(AuthContext)
+  const {authState} = useAuth();
   const {user} = authState;
   return (
     <>
@@ -16,11 +14,10 @@ const Home = () => {
           <NavBar />
         </div>
         <section className="flex max-auto mt-2">
-          <aside className="w-[250px]  rounded-sm shadow-md bg-white p-2 mr-4">
-            {user ?  <Sidebar /> : null}
+          <aside className={`rounded-sm shadow-md bg-white p-2 mr-4 ${user ? 'w-[250px]' : 'w-0'}`}>
+            {user ? <Sidebar /> : null}
           </aside>
           <main>
-            <CreatePost />
             <PostList />
           </main>
         </section>

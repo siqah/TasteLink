@@ -1,9 +1,9 @@
-import  { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+// import  { useContext } from 'react';
+import { useAuth} from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -12,7 +12,7 @@ const Logout = () => {
   };
 
   return <button onClick={handleLogout} 
-   className="text-orange-500 font-medium hover:text-orange-900 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
+   className=" font-medium hover:text-orange-400 transition-colors shadow-md rounded-md p-2 sm:text-sm md:text-base"
 >Logout</button>;
 };
 

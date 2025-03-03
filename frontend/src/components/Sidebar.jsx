@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext} from "react";
+// import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
+import Logout from "../auth/Logout";
 const Sidebar = () => {
-  const { authState } = useContext(AuthContext);
+  const { authState } = useAuth();
   const { user } = authState;
-
-
 
   return (
     <div className="">
@@ -15,7 +14,7 @@ const Sidebar = () => {
         <>
           <div className="flex items-center  space-x-1 sm:space-x-2 md:space-x-2 h-full">
             <div className="ml-2 mt-2">
-            <Link to="/profile">
+              <Link to="/profile">
                 <img
                   src={user.photoURL || "/default-profile.png"}
                   alt="Profile"
@@ -29,12 +28,24 @@ const Sidebar = () => {
               </p>
             </div>
           </div>
-           <div className="mt-4 ml-2">
-            <Link>
-               <h1>Messages</h1>
+          <div className="mt-4 ml-2 ">
+            <Link to="/createpost">
+              <h1>create</h1>
             </Link>
-           </div>
-        
+          </div>
+          <div className="mt-4 ml-2">
+            <Link>
+              <h1>Messages</h1>
+            </Link>
+          </div>
+          <div className="mt-4 ml-2">
+            <Link>
+              <h1>Notifications</h1>
+            </Link>
+          </div>
+          <div className="mt-4 ml-2">
+            <Logout />
+          </div>
         </>
       )}
     </div>

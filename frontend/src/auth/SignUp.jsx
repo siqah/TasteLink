@@ -1,19 +1,17 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import {useNavigate} from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const { signInWithGoogle } = useContext(AuthContext);
+  const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
     try {
       await signInWithGoogle();
-      navigate("/home");
       console.log("Signed in successfully");
+      navigate("/home");
     } catch (error) {
-      console.error("Sign in failed:", error.message);
+      console.error("Sign in failed:", error?.message || error);
     }
   };
 

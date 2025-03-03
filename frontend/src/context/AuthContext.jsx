@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useState, useEffect, useContext } from "react";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase"; 
 import PropTypes from "prop-types";
@@ -8,15 +9,14 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider
 } from "firebase/auth";
-
 import { auth } from "../firebase";
+import { Timestamp } from "firebase/firestore"; // Import Timestamp
 
 const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({ user: null, loading: true });
 
-  // Persist authentication state (auto login when app reloads)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setAuthState({ user, loading: false });
@@ -24,54 +24,46 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
- // Ensure you import Firestore
-  
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-  
+
       // Check if user exists in Firestore
       const userRef = doc(db, "users", user.uid);
       const userSnap = await getDoc(userRef);
-  
+
       if (!userSnap.exists()) {
         await setDoc(userRef, {
           uid: user.uid,
           name: user.displayName,
           email: user.email,
           profilePic: user.photoURL,
-          createdAt: new Date(),
+          createdAt: Timestamp.now(), // Firestore timestamp
         });
       }
-  
+
       setAuthState({ user, loading: false });
     } catch (error) {
-      console.error("Google sign-in error:", error.message);
+      console.error("Google sign-in error:", error?.message || error);
       throw error;
     }
   };
-  
-  // Logout Function
+
   const logout = async () => {
     try {
       await signOut(auth);
-      setAuthState({ user: null });
+      setAuthState({ user: null, loading: true }); // Ensure state resets properly
     } catch (error) {
-      console.error("Logout error:", error.message);
+      console.error("Logout error:", error?.message || error);
       throw error;
     }
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      authState, 
-      signInWithGoogle, 
-
-      logout 
-    }}>
-      {!authState.loading && children} {/* Prevent app render before auth state is known */}
+    <AuthContext.Provider value={{ authState, signInWithGoogle, logout }}>
+      {!authState.loading && children} {/* Prevent UI flickering */}
     </AuthContext.Provider>
   );
 };
@@ -80,4 +72,11 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export { AuthContext, AuthProvider };
+// Custom hook for using auth context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
