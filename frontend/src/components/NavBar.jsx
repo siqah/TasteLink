@@ -1,19 +1,24 @@
 // import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FiMenu } from "react-icons/fi";
 
 const NavBar = () => {
   const { authState } = useAuth();
   const { user } = authState;
 
   return (
-    <nav className="z-0 p-4 flex mx-auto h-min bg-white shadow-md sm:px-6 lg:px-8">
-      <div className="container mx-auto flex justify-between items-center h-16">
+    <nav className="z-50 fixed top-0 left-0 w-full p-4 flex mx-auto h-min bg-white shadow-md sm:px-6 lg:px-8">
+      <div className="container mx-auto flex justify-between items-center space-x-4 sm:space-x-2 md:space-x-4">
         <Link
           to="/"
-          className="text-orange-900 text-2xl font-bold md:text-xl sm:text-lg hover:text-red-950 transition-colors shadow-xl rounded-sm p-2"
+          className="text-orange-900 text-2xl font-bold md:text-xl sm:text-lg hover:text-red-950 transition-colors shadow-xl rounded-sm p-2 hidden sm:block"
         >
           TasteLink
+        </Link>
+
+        <Link to="/menu" className="flex sm:hidden items-center space-x-4">
+          <FiMenu className="w-6 h-6" />
         </Link>
         <div className="flex items-center space-x-4 sm:space-x-2 md:space-x-4">
           {!user ? (

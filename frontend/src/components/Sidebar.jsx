@@ -9,10 +9,10 @@ const Sidebar = () => {
   const { user } = authState;
 
   return (
-    <div className="">
+    <div className=" z-50 fixed p-4 mx-auto h-min ">
       {user && (
         <>
-          <div className="flex items-center  space-x-1 sm:space-x-2 md:space-x-2 h-full">
+          <div className=" flex items-center  space-x-1 sm:space-x-2 md:space-x-2 h-full">
             <div className="ml-2 mt-2">
               <Link to="/profile">
                 <img

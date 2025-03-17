@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect, useContext } from "react";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { db } from "../firebase"; 
+import { firestoreDb} from "../firebase"; 
 import PropTypes from "prop-types";
 import {
   signInWithPopup,
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       const user = result.user;
 
       // Check if user exists in Firestore
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(firestoreDb, "users", user.uid);
       const userSnap = await getDoc(userRef);
 
       if (!userSnap.exists()) {

@@ -8,8 +8,8 @@ const SignUp = () => {
   const handleSignIn = async () => {
     try {
       await signInWithGoogle();
-      console.log("Signed in successfully");
       navigate("/home");
+      console.log("Signed in successfully");
     } catch (error) {
       console.error("Sign in failed:", error?.message || error);
     }
