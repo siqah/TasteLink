@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
+import { getMessaging, getToken,  } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDoLVVGpimIpCH_rU0hkm6YwlUFnhfUq3Q",
@@ -20,5 +21,16 @@ const realtimeDb = getDatabase(app);
 const firestoreDb = getFirestore(app);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
+const messaging = getMessaging(app);
 
-export { auth, realtimeDb, firestoreDb,app, firestore };
+export const requestNotificationPermission = () => {
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' })
+        .then(token => console.log('FCM Token:', token))
+        .catch(err => console.error('Token error:', err));
+    }
+  });
+};
+
+export { auth, realtimeDb, messaging,firestoreDb,app, firestore };

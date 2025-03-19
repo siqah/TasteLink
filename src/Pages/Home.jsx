@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { useAuth } from "../context/AuthContext";
 // import { Link } from "react-router-dom";
 import PostList from "../components/PostList";
+// import UserList from "../components/UserList";
 
 const Home = () => {
   const { authState } = useAuth();
@@ -22,12 +23,10 @@ const Home = () => {
             {user ? <Sidebar /> : null}
           </aside>
 
-          <main>
+          <main className="flex-1">
             <PostList />
           </main>
-          <div className="hidden md:block w-1/4 bg-white p-4 rounded-md shadow-md">
-            <h1>Chefs</h1>
-          </div>
+          
         </section>
       </div>
     </>

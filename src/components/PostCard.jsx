@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import { FcLike } from "react-icons/fc";
+// import { FcLike } from "react-icons/fc";
 
 const PostCard = ({ posts }) => {
   return (

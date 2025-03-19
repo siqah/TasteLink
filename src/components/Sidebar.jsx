@@ -34,7 +34,7 @@ const Sidebar = () => {
             </Link>
           </div>
           <div className="mt-4 ml-2">
-            <Link>
+            <Link to="/chat">
               <h1>Messages</h1>
             </Link>
           </div>
