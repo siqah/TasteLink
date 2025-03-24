@@ -1,0 +1,8 @@
+[build]
+  command = "npm run build" # Or your build command
+  publish = "build" # Or your build output directory
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Content-Type = "application/javascript"
