@@ -7,6 +7,8 @@ import Profile from "./Pages/Profile";
 import Beforelogin from "./Pages/Beforelogin";
 import CreatePost from "./Pages/CreatePost";
 import Menu from "./Pages/Menu";
+import MessagingPage from "./Pages/MessagingPage";
+import NotificationsPage from "./Pages/NotificationsPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/createpost" element={<CreatePost />} />
+        <Route path="messages" element={<MessagingPage/>} />
+        <Route path="notifications" element={<NotificationsPage/>} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
   );
