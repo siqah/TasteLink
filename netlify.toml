@@ -1,6 +1,6 @@
 [build]
   command = "npm run build" # Or your build command
-  publish = "build" # Or your build output directory
+  publish = "dist" # Or your build output directory
 
 [[headers]]
   for = "/*.js"
