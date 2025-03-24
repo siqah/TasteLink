@@ -2,6 +2,8 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FiMenu } from "react-icons/fi";
+import Notifications from "./Notifications/Notifications";
+
 
 const NavBar = () => {
   const { authState } = useAuth();
@@ -21,6 +23,12 @@ const NavBar = () => {
           <FiMenu className="w-6 h-6" />
         </Link>
         <div className="flex items-center space-x-4 sm:space-x-2 md:space-x-4">
+
+
+          <div>
+            {user && <Notifications userId={user.uid} />}
+          </div>
+
           {!user ? (
             <Link
               to="/signup"

@@ -34,12 +34,12 @@ const Sidebar = () => {
             </Link>
           </div>
           <div className="mt-4 ml-2">
-            <Link to="/chat">
+            <Link to="/messages">
               <h1>Messages</h1>
             </Link>
           </div>
           <div className="mt-4 ml-2">
-            <Link>
+            <Link to="notifications">
               <h1>Notifications</h1>
             </Link>
           </div>
