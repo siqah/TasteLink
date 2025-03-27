@@ -26,8 +26,9 @@ const Home = () => {
           <main className="flex-1">
             <PostList />
           </main>
-          <UserList />
-          
+          <div className="hidden lg:block">
+            <UserList />
+          </div>
         </section>
       </div>
     </>
